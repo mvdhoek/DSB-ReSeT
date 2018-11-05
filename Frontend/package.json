@@ -1,0 +1,30 @@
+{
+  "name": "dsb-reset",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@appbaseio/reactivesearch": "^2.13.0",
+    "ajv": "^6.5.5",
+    "fast-deep-equal": "^2.0.1",
+    "fix": "0.0.6",
+    "json-schema-traverse": "^0.4.1",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-scripts": "2.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
