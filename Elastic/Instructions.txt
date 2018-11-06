@@ -1,0 +1,126 @@
+1. Create an attachment ingest pipeline
+Before pushing the ingest pipeline config to Elastic, make sure you have the attachment processor plugin installed to Elastic.
+
+PUT <ELASTIC IP ADDRESS>:9200/_ingest/pipeline/document
+Headers: Content-Type application/json
+Body:
+{
+		"description": "Extract document information",
+		"processors": [
+			{
+				"attachment": {
+					"field": "data",
+					"properties": [
+						"content",
+						"title",
+						"author",
+						"date",
+						"keywords",
+						"language",
+						"content_length",
+						"content_type"
+					]
+				},
+				"remove": {
+					"field": "data"
+				}
+				"rename": {
+					"field": "attachment.title",
+					"target_field": "doctitle"
+				}
+			}
+		]
+}
+
+2. Create the index
+PUT <ELASTIC IP ADDRESS>:9200/<index name>
+Headers: Content-type application/json
+
+{
+
+        "aliases": {},
+        "mappings": {
+            "documenten": {
+                "properties": {
+                    "attachment": {
+                        "properties": {
+                            "author": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "content": {
+                                "type": "text",
+                                "index_options": "offsets",
+                                "term_vector": "with_positions_offsets",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "content_length": {
+                                "type": "long"
+                            },
+                            "content_type": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "date": {
+                                "type": "date"
+                            },
+                            "keywords": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "language": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "title": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "filename": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+}
+
+3. Upload data using the ElasticPut script.

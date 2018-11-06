@@ -1,4 +1,4 @@
 # DSB-ReSeT
 A safety Recommendations Search Tool (ReSeT) using Elastic.
 
-Elastic set-up placeholder.
+Configuration files for the Elastic attachment ingest pipeline. For instructions, see Instructions.txt.
