@@ -1,0 +1,12 @@
+To set the correct access control for your local environment, use the following settings in your elasticsearch.yml (located inside the Elastic install directory) file:
+
+http.port: 9200
+http.cors.allow-origin: "http://localhost:3000"
+http.cors.enabled: true
+http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+http.cors.allow-credentials: true
+
+These settings will enable API communication.
+Instead of allowing connections from a specific port (3000; the port that is used by the node app), you can also allow connections from all localhost ports by setting:
+
+http.cors.allow-origin: /https?:\/\/(localhost)?(127.0.0.1)?(:[0-9]+)?/
