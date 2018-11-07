@@ -1,6 +1,6 @@
 /* OVV colors
 bluegreen: #4a97b5
-orange: rgb(248, 166, 30)
+orange: rgb(248, 166, 30) or #f8a61e
 */
 
 /* containers */
@@ -39,7 +39,7 @@ orange: rgb(248, 166, 30)
 }
 
 .result-list-info {
-  margin: 1rem;
+  margin: rem;
   justify-content: space-between;
 }
 
@@ -90,21 +90,22 @@ orange: rgb(248, 166, 30)
 }
 
 .card-btn:hover {
-  background: #008000;
+  background: #4a97b5;
 	color: white;
 }
 
 .link {
   cursor: pointer;
-	color: mediumseagreen;
+	color: #4a97b5;
 	text-decoration: none;
 	font-weight: bold;
 	margin-left: 20px;
+	margin-top: 15px;
 	font-size: 1.2rem;
 }
 
 .topic {
-  background: mediumseagreen;
+  background: #4a97b5;
 	margin: 3px;
 	padding: 4px;
 	color: white;
@@ -114,11 +115,11 @@ orange: rgb(248, 166, 30)
 }
 
 .topic:hover {
-  background: #008000;
+  background: #4a97b5;
 }
 
 .topic.active {
-  background: #008000;
+  background: #4a97b5;
 }
 
 .toggle-btn {
@@ -134,7 +135,7 @@ orange: rgb(248, 166, 30)
 
 .toggle-btn:hover {
   background: white;
-	color: mediumseagreen;
+	color: #4a97b5;
 }
 
 .range-label {
@@ -210,6 +211,8 @@ orange: rgb(248, 166, 30)
 
 .m10-0 {
   margin: 10px 0;
+  max-width: calc(90%);
+  word-wrap: break-word;
 }
 
 .m1,

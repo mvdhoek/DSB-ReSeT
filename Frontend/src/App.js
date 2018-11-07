@@ -16,6 +16,7 @@ class App extends Component {
           theme={theme}
         >
           <nav className="navbar">
+	    
             <div className="title">Safety <font color="4a97b5">Re</font>commendations <font color="4a97b5">Se</font>arch <font color="4a97b5">T</font>ool - <font color="4a97b5">ReSeT</font></div>
           </nav>
 
@@ -25,11 +26,27 @@ class App extends Component {
 	      <DataSearch
 	          componentId="searchbar"
 		  filterLabel="Search"
-		  dataField={['attachment.author', 'attachment.title', 'attachment.keywords', 'filename']}
+		  dataField={['content', 'attachment.author', 'attachment.title', 'attachment.keywords', 'filename']}
 		  placeholder="Search recommendations ..."
-		  autosuggest={false}
+		  autosuggest={true}
 		  iconPosition="left"
-		  URLParams
+		  URLParams={true}
+		  highlight={true}
+		  customHighlight={(props) => ({
+        	    highlight: {
+                      pre_tags: ['<mark>'],
+            	      post_tags: ['</mark>'],
+            	      fields: {
+			"content": {},
+                        "filename": {},
+			"attachment.author": {},			
+                      },
+		      fragment_size: 1000,
+                      number_of_fragments: 4,
+        	    },
+    		  })}
+		  queryFormat="or"
+  		  fuzziness={"AUTO"}
 		  className="data-search-container results-container"
 		  innerClass={{
 		      input: 'search-input',
