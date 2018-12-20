@@ -14,7 +14,6 @@ num_pages = math.ceil(num_reports / 10)  # this assumes that the website display
 
 #####
 
-#base_url = 'https://www.gov.uk'
 links = []
 base_link = 'https://www.bea.aero'
 #html_part1 = 'https://www.gov.uk/aaib-reports?date_of_occurrence%5Bfrom%5D=&date_of_occurrence%5Bto%5D=&page='
