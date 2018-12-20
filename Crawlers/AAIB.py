@@ -17,6 +17,9 @@ base_url = 'https://www.gov.uk'
 links2 = []
 html_part1 = 'https://www.gov.uk/aaib-reports?date_of_occurrence%5Bfrom%5D=&date_of_occurrence%5Bto%5D=&page='
 html_part2 = '&report_type%5B%5D=formal-report'
+accident_date = []
+aircraft_type = []
+report_title = []
 for g in range(0,num_pages):
     print(g)
     links = []
@@ -45,8 +48,27 @@ for g in range(0,num_pages):
                 except AttributeError:
                     pass
                     
-                    
+        
                 
-                
+    ##############aircraft type#############
+        data_ = [] 
+        
+        for a in soup2.find_all('dd',attrs={'class':'app-c-important-metadata__definition'}):
+            data_.append(str(a))
+        accident_date.append(data_[0].split('>')[1].split('<')[0])
+        aircraft_type.append(data_[3].split('>')[1].split('<')[0])
+        for ab in soup2.find_all('p',attrs={'class':'gem-c-lead-paragraph '}):
+            title.append(str(ab).split('>')[1].split('<')[0].strip())
             
-    
+            
+organization = []        
+for ti in range(0,len(links2)):
+    organization.append('AAIB')
+
+final_df =  pd.DataFrame(
+        {'report_title':report_title,
+         'acccident_date':accident_date,
+         'link': links2,
+         'aircraft_type': aircraft_type,
+         'organization': organization
+         })
