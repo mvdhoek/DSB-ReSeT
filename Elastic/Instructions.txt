@@ -1,9 +1,10 @@
 1. Create an attachment ingest pipeline
 Before pushing the ingest pipeline config to Elastic, make sure you have the attachment processor plugin installed to Elastic.
+-> sudo <elastic install location>/bin/elasticsearch-plugin install ingest-attachment
 
-PUT <ELASTIC IP ADDRESS>:9200/_ingest/pipeline/document
+PUT <ELASTIC IP ADDRESS>:9200/_ingest/pipeline/safety_reports
 Headers: Content-Type application/json
-Body:
+
 {
 		"description": "Extract document information",
 		"processors": [
@@ -15,112 +16,133 @@ Body:
 						"title",
 						"author",
 						"date",
-						"keywords",
-						"language",
 						"content_length",
 						"content_type"
 					]
-				},
+				}
+			},
+			{
 				"remove": {
 					"field": "data"
 				}
+			},
+			{
+				"rename": {
+					"field": "attachment.content",
+					"target_field": "content"
+				}
+			},
+			{
 				"rename": {
 					"field": "attachment.title",
-					"target_field": "doctitle"
+					"target_field": "doc_title",
+					"ignore_failure" : true
+				}
+			},
+			{
+				"rename": {
+					"field": "attachment.author",
+					"target_field": "author",
+					"ignore_failure" : true
+				}
+			},
+			{
+				"rename": {
+					"field": "attachment.date",
+					"target_field": "date",
+					"ignore_failure" : true
+				}
+			},
+			{
+				"rename": {
+					"field": "attachment.content_length",
+					"target_field": "content_length"
+				}
+			},
+			{
+				"rename": {
+					"field": "attachment.content_type",
+					"target_field": "content_type"
+				}
+			},
+			{
+				"remove": {
+					"field": "attachment"
 				}
 			}
 		]
 }
 
 2. Create the index
-PUT <ELASTIC IP ADDRESS>:9200/<index name>
+PUT <ELASTIC IP ADDRESS>:9200/safety_reports
 Headers: Content-type application/json
 
 {
-
-        "aliases": {},
-        "mappings": {
-            "documenten": {
-                "properties": {
-                    "attachment": {
-                        "properties": {
-                            "author": {
-                                "type": "text",
-                                "fields": {
-                                    "keyword": {
-                                        "type": "keyword",
-                                        "ignore_above": 256
-                                    }
-                                }
-                            },
-                            "content": {
-                                "type": "text",
-                                "index_options": "offsets",
-                                "term_vector": "with_positions_offsets",
-                                "fields": {
-                                    "keyword": {
-                                        "type": "keyword",
-                                        "ignore_above": 256
-                                    }
-                                }
-                            },
-                            "content_length": {
-                                "type": "long"
-                            },
-                            "content_type": {
-                                "type": "text",
-                                "fields": {
-                                    "keyword": {
-                                        "type": "keyword",
-                                        "ignore_above": 256
-                                    }
-                                }
-                            },
-                            "date": {
-                                "type": "date"
-                            },
-                            "keywords": {
-                                "type": "text",
-                                "fields": {
-                                    "keyword": {
-                                        "type": "keyword",
-                                        "ignore_above": 256
-                                    }
-                                }
-                            },
-                            "language": {
-                                "type": "text",
-                                "fields": {
-                                    "keyword": {
-                                        "type": "keyword",
-                                        "ignore_above": 256
-                                    }
-                                }
-                            },
-                            "title": {
-                                "type": "text",
-                                "fields": {
-                                    "keyword": {
-                                        "type": "keyword",
-                                        "ignore_above": 256
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "filename": {
-                        "type": "text",
-                        "fields": {
-                            "keyword": {
-                                "type": "keyword",
-                                "ignore_above": 256
-                            }
-                        }
-                    }
-                }
+  "aliases": {},
+  "mappings": {
+    "report": {
+      "properties": {
+        "accident_date": {
+          "type": "date",
+          "ignore_malformed": true
+        },
+        "author": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
             }
+          }
+        },
+        "aircraft_type": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "content": {
+          "type": "text",
+          "index_options": "offsets",
+          "term_vector": "with_positions_offsets"
+        },
+        "content_length": {
+          "type": "long"
+        },
+        "content_type": {
+          "type": "keyword"
+        },
+        "date": {
+          "type": "date"
+        },
+        "doc_title": {
+          "type": "text"
+        },
+        "filename": {
+          "type": "text"
+        },
+        "link": {
+          "type": "text"
+        },
+        "organization": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "web_title": {
+          "type": "text"
         }
-
+      }
+    }
+  }
 }
+
 
 3. Upload data using the ElasticPut script.
