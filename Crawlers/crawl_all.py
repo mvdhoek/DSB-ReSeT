@@ -24,6 +24,9 @@ def crawl_all(path):
     # --> add other SIA crawlers here
 
 
+    # To test or debug: manually load pkl files with webdata and
+    #webdata = pd.read_pickle('../ReportData/NTSB_reports_selection.pkl')
+    webdata = pd.read_pickle('../ReportData/AAIB_reports_selection.pkl')
 
     # now that we have a pandas dataframe with all the webdata, we can download
     # the actual reports to the given path. For every SIA, a separate folder will

@@ -60,24 +60,26 @@ def crawl_reportdata():
                 data_.append(str(a))
             accident_date.append(data_[0].split('>')[1].split('<')[0])
             aircraft_type.append(data_[3].split('>')[1].split('<')[0])
+            if len(soup2.find_all('p',attrs={'class':'gem-c-lead-paragraph '})) < 1:
+                print("Missing title element on page {}, entry {}".format(g, j)) # # TEMP: show missing title entries
+                report_title.append("MISSING TITLE") # # TEMP: append "MISSING TITLE" to report title field
             for ab in soup2.find_all('p',attrs={'class':'gem-c-lead-paragraph '}):
-                report_title.append(str(ab).split('>')[1].split('<')[0].strip())
-
+                strp_title = str(ab).split('>')[1].split('<')[0].strip()
+                report_title.append(strp_title)
 
     organization = []
     for ti in range(0,len(links2)):
-        organization.append('AAIB')
+        organization.append('AAIB UK')
 
     final_df =  pd.DataFrame(
             {'report_title':report_title,
-             'accident_date':accident_date,
+             'accident_date':pd.to_datetime(accident_date),
              'link': links2,
              'aircraft_type': aircraft_type,
              'organization': organization
              })
 
     return final_df
-
 
 if __name__ == '__main__':
     webdata = crawl_reportdata()
