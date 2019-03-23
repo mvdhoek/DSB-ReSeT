@@ -37,6 +37,8 @@ class App extends Component {
 		});
 	}
 
+	/* to do: field score, fuzziness, datafield to be included in search, correct <mark> results, autosugges is slow for large fields */
+
 
 	render() {
 		return (
@@ -55,30 +57,33 @@ class App extends Component {
 								filterLabel="Search"
 								/* Define the data fields that the search engine will look for in the Elasticsearch index*/
 								dataField={['content', 'author', 'doc_title', 'web_title']}
+								fieldWeights={[2, 1, 1, 2]}
 								placeholder="Search reports ..."
-								autosuggest={true}
+								autosuggest={false}
 								iconPosition="left"
 								URLParams={true}
 								highlight={true}
-								/*customHighlight={(props) => ({
+								customHighlight={(props) => ({
 									highlight: {
 										pre_tags: ['<mark>'],
 										post_tags: ['</mark>'],
 										fields: {
 											"content": {},
-											"link": {},
-											"author": {},
+											"web_title": {},
+											"doc_title": {},
 										},
-										fragment_size: 1000,
-										number_of_fragments: 4,
+										fragment_size: 300,
+										number_of_fragments: 1,
 									},
-								})}*/
+								})}
 								queryFormat="or"
-								fuzziness={"AUTO"}
+								fuzziness={1}
+								debounce={1000}
 								className="data-search-container results-container"
 								innerClass={{
 									input: 'search-input',
 								}}
+								showClear={true}
 							/>
 
 							<Results currentTopics={this.state.currentTopics} toggleTopic={this.toggleTopic} />

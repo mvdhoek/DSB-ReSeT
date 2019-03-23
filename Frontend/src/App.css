@@ -3,6 +3,12 @@ bluegreen: #4a97b5
 orange: rgb(248, 166, 30) or #f8a61e
 */
 
+/* html mark */
+mark {
+  background-color: rgb(255, 242, 219);
+  color: black;
+}
+
 /* containers */
 .container {
   width: 100%;
@@ -19,8 +25,7 @@ orange: rgb(248, 166, 30) or #f8a61e
 }
 
 .filters-container {
-  max-height: calc(100vh - 100px);
-  height: 100%;
+  max-height: calc(75%);
 	overflow-y: auto;
 }
 
@@ -66,9 +71,38 @@ orange: rgb(248, 166, 30) or #f8a61e
 .title {
   color: white;
 	/*font-family: 'Monoton', cursive;*/
-	font-family: 'Bungee Inline', cursive;
-	font-size: 2rem;
+  /*font-family: 'Bungee Inline', cursive;*/
+  font-family: 'Major Mono Display', monospace;
+	font-size: 2.2rem;
 	text-align: left;
+}
+
+.title-icon {
+  color: white;
+	font-size: 2.2rem;
+	text-align: left;
+}
+
+.title-icon:hover {
+	color: #4a97b5;
+}
+
+.btm-text {
+  color: white;
+  text-align: left;
+  margin-top: 14px;
+}
+
+.btm-links {
+  color: white;
+  text-align: left;
+  display: inline;
+  margin-inline-end: 20px;
+  font-size: 1.2em;
+}
+
+.btm-links:hover {
+	color: #4a97b5;
 }
 
 /* components */
@@ -89,7 +123,11 @@ orange: rgb(248, 166, 30) or #f8a61e
 .card-btn {
   background: #eff3f6;
   min-width: 70px;
+  max-width: calc(80%);
+  max-height: 100px;
   align-self: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-btn:hover {
@@ -184,6 +222,8 @@ orange: rgb(248, 166, 30) or #f8a61e
   background: #fafafa;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   height: 50px;
+  margin-top: 10px;
+  max-width: calc(93%);
 }
 
 .search-input:focus {
@@ -258,6 +298,10 @@ orange: rgb(248, 166, 30) or #f8a61e
     text-align: left;
   }
 
+  .title-icon {
+    text-align: left;
+  }
+
   .result-list {
     margin-top: 170px;
   }
@@ -271,10 +315,6 @@ orange: rgb(248, 166, 30) or #f8a61e
 
   .navbar.active {
 		height: 100vh;
-  }
-
-  .title {
-	  text-align: center;
   }
 
   .results-container {
@@ -294,6 +334,14 @@ orange: rgb(248, 166, 30) or #f8a61e
   .hidden {
     display: none;
   }
+
+  .btm-text {
+    display: none;
+  }
+
+  .btm-links {
+    display: none;
+  }
 }
 
 @media all and (max-width: 992px) {
@@ -303,6 +351,14 @@ orange: rgb(248, 166, 30) or #f8a61e
 
   .result-list {
     margin-top: 220px;
+  }
+  
+  .btm-text {
+    display: none;
+  }
+
+  .btm-links {
+    display: none;
   }
 }
 
@@ -321,5 +377,17 @@ orange: rgb(248, 166, 30) or #f8a61e
   .title {
     text-align: center;
 		margin-bottom: 50px;
+  }
+
+  .title-icon {
+    text-align: left;
+  }
+
+  .btm-text {
+    display: none;
+  }
+
+  .btm-links {
+    display: none;
   }
 }
