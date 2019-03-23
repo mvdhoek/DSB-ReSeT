@@ -88,18 +88,13 @@ if __name__ == '__main__':
     # too big for large documents
     helpers.bulk(es_conn, es_batch, chunk_size=es_chunk_size)
 
-# TO BE REMOVED
-        # add doc body to es_batch
+    # for debugging, put first document
+    #es_conn.index(index=es_batch[0]['_index'], doc_type=es_batch[0]['_type'], body=es_batch[0]['_source'], id=es_batch[0]['_id'], pipeline=es_batch[0]['pipeline'])
 
-
-        # put to Elasticsearch
-        #es_conn.index(
-        #    index='ovv_rapporten',
-        #    doc_type='documenten',
-        #    body=doc_body,
-        #    id = filehash,
-        #    pipeline='documents'
-        #)
-
-        # check if creation is succesful
-        #es_conn.get(index='ovv_rapporten', doc_type='documenten', id=filehash)
+    # for debugging, get all document _ids
+    #res = es_conn.search(index=es_index, body={"query": {"match_all": {}}, "size": 500})
+    #s_ids = [d['_id'] for d in res['hits']['hits']]
+    #s_ids[0]
+    #term_vec = es_conn.search(index=es_index, body={})
+    #es_conn.termvectors(index=es_index, doc_type=es_doctype, id=s_ids[0], fields='content', offsets=False, positions=False)
+    # mtermvectors for list of ids
