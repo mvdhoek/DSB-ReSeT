@@ -2,6 +2,8 @@
 Before pushing the ingest pipeline config to Elastic, make sure you have the attachment processor plugin installed to Elastic.
 -> sudo <elastic install location>/bin/elasticsearch-plugin install ingest-attachment
 
+In the ingest attachment processor, the "indexed_chars" property is set to inf (-1). Make sure you have enough HEAP (memory) to extract large documents. By default, indexed_chars is 100,000.
+
 PUT <ELASTIC IP ADDRESS>:9200/_ingest/pipeline/safety_reports
 Headers: Content-Type application/json
 
@@ -18,7 +20,8 @@ Headers: Content-Type application/json
 						"date",
 						"content_length",
 						"content_type"
-					]
+					],
+					"indexed_chars": -1,
 				}
 			},
 			{
